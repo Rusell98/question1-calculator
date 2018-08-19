@@ -28,27 +28,24 @@ namespace WindowsFormsApp3
         private void Form1_Load(object sender, EventArgs e)
         {
 
-        }
-        int tab = 0;
+        }       
         /// <summary>记录指针</summary>
         int Precord = 0;
         /// <summary>记录数</summary>
         int RecordNum = 0;
         public String text = "";
         /// <summary>存储记录</summary>
-        public String[] record = new String[10];
-        /// <summary>存储表达式</summary>
-        public String[] texts = new String[10000];
+        public String[] Record = new String[10];
         /// <summary>加载js引擎</summary>
         Microsoft.JScript.Vsa.VsaEngine ve = Microsoft.JScript.Vsa.VsaEngine.CreateEngine();
 
         /// <summary>写入txt保存记录的函数
         /// <param name="p"></param>
         /// </summary>
-        public void Save_result(string p)
+        public void SaveResult(string p)
         {           
             /// <remarks>根据所需写入txt的具体位置修改文件路径</remarks>
-            FileStream fs = new FileStream(@"E:\软件作业\WindowsFormsApp3\memory.txt", FileMode.Append);
+            FileStream fs = new FileStream(@"C:\Users\18081\Desktop\代码质量-课后作业\memory.txt", FileMode.Append);
             byte[] data = new UTF8Encoding().GetBytes(p);
             fs.Write(data, 0, data.Length);
             fs.Flush();
@@ -58,9 +55,7 @@ namespace WindowsFormsApp3
         public void addComments(String s)
         { 
             this.text += s;
-            this.texts[tab] = s;
-            this.richTextBox1.Text = this.text;
-            tab++;
+            this.TextInput.Text = this.text;
         }
         /// <summary>1按钮的触发事件</summary>
         private void button1_Click(object sender, EventArgs e)
@@ -108,58 +103,58 @@ namespace WindowsFormsApp3
             this.addComments("9");
         }
         /// <summary>0按钮的触发事件</summary>
-        private void button10_Click(object sender, EventArgs e)
+        private void button0_Click(object sender, EventArgs e)
         {
             this.addComments("0");
         }
         /// <summary> .(小数点)按钮的触发事件</summary>
-        private void button12_Click(object sender, EventArgs e)
+        private void buttonDot_Click(object sender, EventArgs e)
         {
             this.addComments(".");
         }
         /// <summary> )按钮的触发事件</summary>
-        private void button17_Click(object sender, EventArgs e)
+        private void buttonRightBracket_Click(object sender, EventArgs e)
         {
             this.addComments(")");
         }
         /// <summary> (按钮的触发事件</summary>
-        private void button18_Click(object sender, EventArgs e)
+        private void buttonLeftBracket_Click(object sender, EventArgs e)
         {
             this.addComments("(");
         }
         /// <summary> +按钮的触发事件</summary>
-        private void button13_Click(object sender, EventArgs e)
+        private void buttonAdd_Click(object sender, EventArgs e)
         {
             this.addComments("+");
         }
         /// <summary> -按钮的触发事件</summary>
-        private void button14_Click(object sender, EventArgs e)
+        private void buttonSubstract_Click(object sender, EventArgs e)
         {
             this.addComments("-");
         }
         /// <summary> *按钮的触发事件</summary>
-        private void button15_Click(object sender, EventArgs e)
+        private void buttonMultiply_Click(object sender, EventArgs e)
         { 
             this.addComments("*");
         }
         /// <summary>/按钮的触发事件</summary>
-        private void button16_Click(object sender, EventArgs e)
+        private void buttonDivide_Click(object sender, EventArgs e)
         {
             this.addComments("/");
         }
         /// <summary> =按钮的触发事件,最终计算结果并显示，且调用函数将计算结果存入txt文件中</summary>
-        private void button11_Click(object sender, EventArgs e)
+        private void buttonEqual_Click(object sender, EventArgs e)
         {
             /// <remark>就是结果</remark>
             try
             { 
                 String result = Microsoft.JScript.Eval.JScriptEvaluate(this.text, ve).ToString();
-                Save_result(text);
-                Save_result("=");
-                Save_result(result);
-                Save_result("\r\n");
-                this.textBox1.Text = result;
-                this.record[RecordNum] = this.text;
+                SaveResult(text);
+                SaveResult("=");
+                SaveResult(result);
+                SaveResult("\r\n");
+                this.TextOutput.Text = result;
+                this.Record[RecordNum] = this.text;
                 this.text = result;
                 this.RecordNum++;
                 this.Precord = this.RecordNum;
@@ -168,33 +163,26 @@ namespace WindowsFormsApp3
             {
                 MessageBox.Show("输入错误！","提示");
                 this.text = "";
-                tab = 0;
             }
         }
         /// <summary>清零按钮的触发事件</summary>
-        private void button20_Click(object sender, EventArgs e)
+        private void buttonClear_Click(object sender, EventArgs e)
         {
             this.text = "";
-            this.richTextBox1.Text = this.text;
-            this.textBox1.Text = this.text;
+            this.TextInput.Text = this.text;
+            this.TextOutput.Text = this.text;
         }
         /// <summary>退格按钮的触发事件</summary>
-        private void button19_Click(object sender, EventArgs e)
+        private void buttonDelete_Click(object sender, EventArgs e)
         {
-            if (tab > 0)
+            if(this.text.Length>0)
             {
-                tab -= 1;
-            }
-            this.text = "";
-            for (int i = 0; i < tab; i++)
-            {
-                this.text += this.texts[i];
-            }
-
-            this.richTextBox1.Text = this.text;
+                this.text = this.text.Substring(0, this.text.Length - 1);
+                this.TextInput.Text = this.text;
+            }           
         }
         /// <summary> 后退按钮的触发事件</summary>
-        private void button21_Click(object sender, EventArgs e)
+        private void buttonBack_Click(object sender, EventArgs e)
         {
             Precord--;
             if (Precord < 0)
@@ -202,10 +190,10 @@ namespace WindowsFormsApp3
                 Precord = RecordNum;
             }
             /// <remarks>this.text = this.record[Precord];</remarks>
-            this.richTextBox1.Text = this.record[Precord];
+            this.TextInput.Text = this.Record[Precord];
         }
         /// <summary>前进按钮的触发事件</summary>
-        private void button22_Click(object sender, EventArgs e)
+        private void buttonForward_Click(object sender, EventArgs e)
         {
             Precord++;
             if (Precord > RecordNum)
@@ -213,7 +201,7 @@ namespace WindowsFormsApp3
                 Precord = 0;
             }
             /// <remark>this.text = this.record[Precord];</remark>
-            this.richTextBox1.Text = this.record[Precord];
+            this.TextInput.Text = this.Record[Precord];
         }
     }
 }

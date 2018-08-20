@@ -136,6 +136,40 @@ private void buttonBack_Click(object sender, EventArgs e)
     this.TextInput.Text = this.Record[Precord];
 }
 ```
+### 10、测试程序
+先在解决方案中添加项目UnitTest，在在单元测试中添加引用WindowsFormsApp3，然后进入单元测试，编写测试代码。
+```C
+using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WindowsFormsApp3;
+
+namespace UnitTest
+{
+    [TestClass]
+    public class UnitTest1
+    {
+        /// <summary>
+        /// 测试addComments函数是否有效
+        /// </summary>
+        [TestMethod]
+        public void AddCommentsTest()
+        {
+            Form1 calculator1 = new Form1();
+            calculator1.addComments("1+2*(2+0.5)");
+            Assert.AreEqual(calculator1.text, "1+2*(2+0.5)");
+        }
+        /// <summary>
+        /// 在Form1.cs中重新编写一个便于测试的BottonEqual函数，便于测试；若测试通过，则等于按钮功能也无误
+        /// </summary>
+        [TestMethod]
+        public void BottonEqualTest()
+        {
+            Form1 calculator2 = new Form1();
+            Assert.AreEqual(calculator2.BottonEqual("5-2/(1-0.5)"), "1");
+        }
+    }
+}
+```
 
 ---
 ## 三、项目测试
@@ -145,6 +179,8 @@ private void buttonBack_Click(object sender, EventArgs e)
 ### 3、退格、清零、前进->、后退<-按钮功能均可以实现。
 ### 4、输入错误的表达式后，出现提示报错窗口。
 ![图片加载失败](error.png "提示报错窗口")
+### 5、运行单元测试，测试结果无误。
+![图片加载失败](test.png "单元测试通过")
 
 ---
 ## 四、项目使用
@@ -161,5 +197,7 @@ private void buttonBack_Click(object sender, EventArgs e)
 ---
 ## 七、项目的分工
     代码编写：卢沁书、彭特
-    XML注释：陈岑、张佑康
     代码手册生成：黄博
+    XML注释：陈岑、张佑康
+    Readme撰写：卢沁书
+    单元测试编写：卢沁书

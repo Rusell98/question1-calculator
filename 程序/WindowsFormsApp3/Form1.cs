@@ -45,7 +45,7 @@ namespace WindowsFormsApp3
         public void SaveResult(string p)
         {           
             /// <remarks>根据所需写入txt的具体位置修改文件路径</remarks>
-            FileStream fs = new FileStream(@"C:\Users\18081\Desktop\代码质量-课后作业\memory.txt", FileMode.Append);
+            FileStream fs = new FileStream(@"C:\Users\18081\Desktop\question1-calculator-master\程序\memory.txt", FileMode.Append);
             byte[] data = new UTF8Encoding().GetBytes(p);
             fs.Write(data, 0, data.Length);
             fs.Flush();
@@ -202,6 +202,16 @@ namespace WindowsFormsApp3
             }
             /// <remark>this.text = this.record[Precord];</remark>
             this.TextInput.Text = this.Record[Precord];
+        }
+        /// <summary>
+        /// 用于测试等于功能是否实现
+        /// </summary>
+        /// <param name="s"></param>
+        public String BottonEqual(string s)
+        {
+            String TestText = s;
+            String TestResult = Microsoft.JScript.Eval.JScriptEvaluate(TestText, ve).ToString();
+            return TestResult;
         }
     }
 }
